@@ -34,7 +34,7 @@ export default function MoveList() {
               <Button
                 loading = {false}
                 size="large"
-                type="danger"
+                type="ghost"
                 onClick={() => navigate(`/movie/${ele.maPhim}`)}
               >
                 XEM CHI TIẾT
