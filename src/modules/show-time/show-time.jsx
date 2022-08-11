@@ -4,6 +4,7 @@ import "moment/locale/vi";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetchMovieShowTimesAPI } from "../../services/cinema";
+import { formatDate } from "../../utils/common";
 
 export default function ShowTime() {
   const moment = require("moment");
@@ -58,7 +59,7 @@ export default function ShowTime() {
                       return (
                         <div key={ele.maLichChieu} className="col-4">
                           <Link to={`/booking/${ele.maLichChieu}`}>
-                            {moment(ele.ngayChieuGioChieu).format("llll")}
+                            {formatDate(ele.ngayChieuGioChieu)}
                           </Link>
                         </div>
                       );

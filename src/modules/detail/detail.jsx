@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMovieDetailApi } from "../../services/movie";
+import { formatDate } from "../../utils/common";
 
 export default function Detail() {
   const params = useParams();
@@ -25,7 +26,7 @@ export default function Detail() {
         <p>
           {movieDetail.moTa}
         </p>
-        <p>{movieDetail.ngayKhoiChieu}</p>
+        <p>{formatDate(movieDetail.ngayKhoiChieu)}</p>
         <div>
           <button className="btn btn-info mr-2">TRAILER</button>
         </div>
