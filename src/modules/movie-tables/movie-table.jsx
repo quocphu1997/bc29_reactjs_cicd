@@ -4,10 +4,13 @@ import { useAsync } from "hooks/useAsync";
 import React from "react";
 import { fetchMovieListApi } from "services/movie";
 import { formatDate } from "utils/common";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MovieTable() {
   const navigate = useNavigate();
+  const { state: data = [] } = useAsync({
+    service: () => fetchMovieListApi(),
+  });
   const columns = [
     {
       title: "Tên phim ",
@@ -31,17 +34,24 @@ export default function MovieTable() {
     {
       title: "Action",
       key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <button className="btn btn-info">Invite {record.name}</button>
-          <button className="btn btn-danger">Delete</button>
-        </Space>
-      ),
+      render: (_, record) => {
+        return (
+          <Space size="middle">
+            <button
+              onClick={() =>
+                navigate(`/admin/movie-managerment/${record.maPhim}/update`)
+              }
+              className="btn btn-info"
+            >
+              Edit
+            </button>
+            <button className="btn btn-danger">Delete</button>
+          </Space>
+        );
+      },
     },
   ];
-  const { state: data = [] } = useAsync({
-    service: () => fetchMovieListApi(),
-  });
+
   const App = () => (
     <Table rowKey="maPhim" columns={columns} dataSource={data} />
   );

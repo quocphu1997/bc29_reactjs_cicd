@@ -1,26 +1,26 @@
 import { useContext, useEffect, useState } from "react";
 import { LoadingContext } from "../contexts/loading.context";
 
-
-
-export const useAsync = ({ dependancies = [], service }) => {
+export const useAsync = ({ dependancies = [], service, condition = true }) => {
   const [_, setLoadingState] = useContext(LoadingContext);
-  const [state, setState] = useState([])
+  const [state, setState] = useState([]);
 
   useEffect(() => {
-    fetchData();
+    if (condition) {
+      fetchData();
+    }
   }, dependancies);
   const fetchData = async () => {
-    setLoadingState({isLoading: true});
+    setLoadingState({ isLoading: true });
     // call api
-    const results = await service()
-    console.log(results);
+    const results = await service();
+    // console.log(results);
     // end call api
-    setLoadingState({isLoading: false});
+    setLoadingState({ isLoading: false });
 
-    setState(results.data.content)
+    setState(results.data.content);
   };
   return {
-    state
-  }
+    state,
+  };
 };
