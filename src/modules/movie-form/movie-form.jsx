@@ -11,7 +11,9 @@ import {
   Switch,
   TreeSelect,
 } from "antd";
+import { GROUP_ID } from "constants/common";
 import React, { useState } from "react";
+import { addMovieUploadImageApi } from "services/movie";
 
 export default function MovieForm() {
   const [component, setComponent] = useState("default");
@@ -23,8 +25,36 @@ export default function MovieForm() {
     // console.log(component);
   };
 
-  const handleSave = (value) => {
-    console.log("value", value);
+  const handleSave = async (value) => {
+    value.ngayKhoiChieu = value.ngayKhoiChieu.format("DD/MM/YYYY");
+    value.maNhom = GROUP_ID;
+    const formData = new FormData();
+    // const {
+    //   tenPhim,
+    //   trailer,
+    //   moTa,
+    //   dangChieu,
+    //   sapChieu,
+    //   ngayKhoiChieu,
+    //   danhGia,
+    //   hot,
+    // } = value;
+    // formData.append("Tên phim", tenPhim);
+    // formData.append("Tên phim", trailer);
+    // formData.append("Mô tả", moTa);
+    // formData.append("Ngày khởi chiếu", ngayKhoiChieu);
+    // formData.append("Sắp chiếu", sapChieu);
+    // formData.append("Đang chiếu", dangChieu);
+    // formData.append("Hot", hot);
+    // formData.append("Đánh giá", danhGia);
+
+    for (const key in value) {
+      formData.append(key, value[key]);
+      sendfile && formData.append("File", sendfile, sendfile.name);
+    }
+
+    const result = await addMovieUploadImageApi(formData);
+    console.log(result);
   };
   const hanldeChangeImage = (event) => {
     const file = event.target.files[0];
@@ -34,8 +64,9 @@ export default function MovieForm() {
     reader.onload = (event) => {
       setImage(event.target.result);
       setSendfile(file);
+      // console.log(event.target.result);
     };
-    console.log(file);
+    // console.log(file);
   };
   return (
     <Form
@@ -55,7 +86,6 @@ export default function MovieForm() {
         hot: true,
         trailer: "",
         danhGia: "",
-        File: "",
       }}
       size={component}
       onFinish={handleSave}
