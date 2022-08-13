@@ -61,7 +61,7 @@ export default function MovieForm() {
     value.maNhom = GROUP_ID;
     console.log(value);
     sendfile && formData.append("File", sendfile, sendfile.name);
-    params.movieId && formData.append("Mã phim", params.movieId);
+    params.movieId && formData.append("MaPhim", params.movieId);
     for (const key in value) {
       formData.append(key, value[key]);
     }
