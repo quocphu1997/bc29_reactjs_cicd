@@ -30,6 +30,8 @@ export default function MovieForm() {
   const navigate = useNavigate();
   const params = useParams();
 
+
+
   const [form] = Form.useForm();
   const { state: movieDetail } = useAsync({
     service: () => fetchMovieDetailApi(params.movieId),
@@ -44,8 +46,8 @@ export default function MovieForm() {
         ngayKhoiChieu: moment(movieDetail.ngayKhoiChieu),
       });
       setImage(movieDetail.hinhAnh);
-      console.log(movieDetail.hinhAnh);
-      console.log(image);
+      // console.log(movieDetail.hinhAnh);
+      // console.log(image);
     }
   }, [movieDetail]);
 
@@ -60,11 +62,11 @@ export default function MovieForm() {
     value.ngayKhoiChieu = value.ngayKhoiChieu.format("DD/MM/YYYY");
     value.maNhom = GROUP_ID;
     console.log(value);
-    sendfile && formData.append("File", sendfile, sendfile.name);
-    params.movieId && formData.append("MaPhim", params.movieId);
     for (const key in value) {
       formData.append(key, value[key]);
     }
+    sendfile && formData.append("File", sendfile, sendfile.name);
+    params.movieId && formData.append("maPhim", params.movieId);
     if (params.movieId) {
       await updateMovieUploadImageApi(formData);
     } else {
@@ -126,11 +128,11 @@ export default function MovieForm() {
         trigger={["onChange"]}
         rules={[
           { required: true, message: "Tên phim không dược bỏ trống" },
-          {
-            pattern:
-              "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_]+$",
-            message: "Tên phim không đúng định dạng",
-          },
+          // {
+          //   pattern:
+          //     "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_]+$",
+          //   message: "Tên phim không đúng định dạng",
+          // },
         ]}
       >
         <Input />

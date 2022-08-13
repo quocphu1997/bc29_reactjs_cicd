@@ -31,9 +31,17 @@ const updateMovieUploadImageApi = (data) => {
     data: data,
   });
 };
+
+const deleteMovieApi = (movieId) => {
+  return request({
+    url: `/QuanLyPhim/XoaPhim?MaPhim=${movieId}`,
+    method: "DELETE",
+  });
+};
 export {
   fetchMovieListApi,
   fetchMovieDetailApi,
   addMovieUploadImageApi,
   updateMovieUploadImageApi,
+  deleteMovieApi,
 };

@@ -1,16 +1,19 @@
 import "moment/locale/vi";
-import { Space, Table, Tag, Button } from "antd";
+import { Space, Table, Tag, Button, notification } from "antd";
 import { useAsync } from "hooks/useAsync";
-import React from "react";
-import { fetchMovieListApi } from "services/movie";
+import React, { useEffect } from "react";
+import { deleteMovieApi, fetchMovieListApi } from "services/movie";
 import { formatDate } from "utils/common";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function MovieTable() {
   const navigate = useNavigate();
+
   const { state: data = [] } = useAsync({
     service: () => fetchMovieListApi(),
+    // dependancies: data,
   });
+
   const columns = [
     {
       title: "Tên phim ",
@@ -45,7 +48,20 @@ export default function MovieTable() {
             >
               Edit
             </button>
-            <button className="btn btn-danger">Delete</button>
+            <button
+              onClick={() => {
+                deleteMovieApi(record.maPhim);
+                notification.success({
+                  description: "Delete Movie Success",
+                });
+                setInterval(() => {
+                  navigate(0);
+                }, 500);
+              }}
+              className="btn btn-danger"
+            >
+              Delete
+            </button>
           </Space>
         );
       },
