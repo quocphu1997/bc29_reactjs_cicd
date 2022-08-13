@@ -120,7 +120,19 @@ export default function MovieForm() {
           <Radio.Button value="large">Large</Radio.Button>
         </Radio.Group>
       </Form.Item>
-      <Form.Item label="Tên phim" name="tenPhim">
+      <Form.Item
+        label="Tên phim"
+        name="tenPhim"
+        trigger={["onChange"]}
+        rules={[
+          { required: true, message: "Tên phim không dược bỏ trống" },
+          {
+            pattern:
+              "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹsW|_]+$",
+            message: "Tên phim không đúng định dạng",
+          },
+        ]}
+      >
         <Input />
       </Form.Item>
       <Form.Item label="Trailer" name="trailer">
