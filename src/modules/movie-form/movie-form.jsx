@@ -60,13 +60,12 @@ export default function MovieForm() {
     value.ngayKhoiChieu = value.ngayKhoiChieu.format("DD/MM/YYYY");
     value.maNhom = GROUP_ID;
     console.log(value);
+    sendfile && formData.append("File", sendfile, sendfile.name);
+    params.movieId && formData.append("Mã phim", params.movieId);
     for (const key in value) {
       formData.append(key, value[key]);
-      sendfile && formData.append("File", sendfile, sendfile.name);
     }
-
     if (params.movieId) {
-      formData.append("Mã phim", params.movieId);
       await updateMovieUploadImageApi(formData);
     } else {
       await addMovieUploadImageApi(formData);
@@ -145,7 +144,7 @@ export default function MovieForm() {
       <Form.Item label="Số sao" name="danhGia">
         <InputNumber />
       </Form.Item>
-      <Form.Item label="Hình ảnh" >
+      <Form.Item label="Hình ảnh">
         <Input type="file" onChange={hanldeChangeImage} />
       </Form.Item>
       <Image
